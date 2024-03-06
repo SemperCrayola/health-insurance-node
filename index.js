@@ -1,5 +1,7 @@
-const express = require('express')
-const app = express()
+
+
+const express = require('express');
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -139,6 +141,34 @@ app.post('/addAge', (req, res) => {
         agePoints = 30;
     }
     res.json({ agePoints });
+});
+app.post('/addBloodPressure', (req, res) => {
+
+    const systolic = parseInt(req.body.systolic);
+    const diastolic = parseInt(req.body.diastolic)
+    let bloodPressurePoints = 0;
+    var bloodPressureType;
+    if (systolic < 120 && diastolic <= 80) {
+        bloodPressureType = 'normal';
+        bloodPressurePoints = 0;
+    } else if (systolic >= 120 && systolic <= 129 && diastolic <= 80) {
+        bloodPressureType = 'elevated';
+        bloodPressurePoints = 15;
+    } else if ((systolic >= 130 && systolic <= 139) || (diastolic >= 80 && diastolic <= 89))  {
+        bloodPressureType = 'stage one';
+        bloodPressurePoints = 30;
+    } else if(systolic >= 140 || diastolic >= 90){
+        bloodPressureType = 'stage two';
+        bloodPressurePoints = 75;
+    }else if ((systolic > 180 && diastolic > 120) || (systolic > 180 || diastolic > 120)){
+        bloodPressureType = 'crisis';
+        bloodPressurePoints = 100;
+    }
+    else{
+        bloodPressureType = 'Please enter valid numbers';
+        bloodPressurePoints = 'could not compute';
+    }
+    res.json({bloodPressureType, bloodPressurePoints });
 });
 
 
