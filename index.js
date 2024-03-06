@@ -1,5 +1,5 @@
 const express = require('express')
-app = express()
+const app = express()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -143,27 +143,26 @@ app.post('/addAge', (req, res) => {
 
 
 app.post('/calculateBMI', (req, res) => {
-	const weight = parseInt(req.body.weight);
-	const height = parseInt(req.body.height);
-	
-	const weightKg = weight * .453592;
-	const heightM = height * .0254;
+    const weight = parseInt(req.body.weight);
+    const height = parseInt(req.body.height);
+    
+    const weightKg = weight * 0.453592;
+    const heightM = height * 0.0254;
 
-	var bmi = weightKg / (heightM * heightM);
-	let bmiPoints = 0;
-    if(18.5<bmi<24.9){
+    const bmi = weightKg / (heightM * heightM);
+
+    let bmiPoints = 0;
+    if (bmi >= 18.5 && bmi <= 24.9) {
         bmiPoints = 0;
-    }else if(25.0<bmi<29.9){
+    } else if (bmi >= 25.0 && bmi <= 29.9) {
         bmiPoints = 10;
-    }else if(30.0<bmi<34.9){
+    } else if (bmi >= 30.0 && bmi <= 34.9) {
         bmiPoints = 20;
-    }else{
+    } else {
         bmiPoints = 30;
     }
+
     res.json({ bmiPoints, bmi });
-
-
-
 });
 
 // Custom 404 page.
