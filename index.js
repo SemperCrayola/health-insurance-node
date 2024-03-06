@@ -174,6 +174,29 @@ app.get('/calculate-bmi', (request, response) => {
 	response.type('text/plain')
 	response.send('Todo: Implement "/calculate-bmi"')
 })
+app.post('/calculateBMI', (req, res) => {
+	const weight = parseInt(req.body.weight);
+	const height = parseInt(req.body.height);
+	
+	const weightKg = weight * .453592;
+	const heightM = height * .0254;
+
+	var bmi = weightKg / (heightM * heightM);
+	let bmiPoints = 0;
+    if(18.5<bmi<24.9){
+        bmiPoints = 0;
+    }else if(25.0<bmi<29.9){
+        bmiPoints = 10;
+    }else if(30.0<bmi<34.9){
+        bmiPoints = 20;
+    }else{
+        bmiPoints = 30;
+    }
+    res.json({ bmiPoints, bmi });
+
+
+
+});
 
 // Custom 404 page.
 app.use((request, response) => {
