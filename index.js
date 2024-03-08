@@ -194,6 +194,19 @@ app.post('/calculateBMI', (req, res) => {
 
     res.json({ bmiPoints, bmi });
 });
+app.post('/history', (req, res) => {
+
+    const history = parseInt(req.body.history);
+    let historyPoints = 0;
+    if(history == "diabetes"){
+        historyPoints = 10;
+    }if(history == "cancer"){
+        historyPoints = 10;
+    }if(history == "alzheimers"){
+        historyPoints = 10;
+    }
+    res.json({ agePoints });
+});
 
 // Custom 404 page.
 app.use((request, response) => {
