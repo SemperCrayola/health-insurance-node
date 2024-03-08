@@ -200,9 +200,9 @@ app.post('/history', (req, res) => {
     let historyPoints = 0;
     if(history == "diabetes"){
         historyPoints = 10;
-    }if(history == "cancer"){
+    }else if(history == "cancer"){
         historyPoints = 10;
-    }if(history == "alzheimers"){
+    }else if(history == "alzheimers"){
         historyPoints = 10;
     }
     res.json({ agePoints });
