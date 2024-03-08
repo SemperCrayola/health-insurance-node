@@ -195,7 +195,7 @@ app.post('/calculateBMI', (req, res) => {
     res.json({ bmiPoints, bmi });
 });
 
-function calculateHistoryPoints(history) {
+app.post('/calculateHistoryPoints', (req, res) => {
     let historyPoints = 0;
     if (history.includes("diabetes")) {
         historyPoints += 10;
@@ -206,8 +206,8 @@ function calculateHistoryPoints(history) {
     if (history.includes("alzheimers")) {
         historyPoints += 10;
     }
-    return historyPoints;
-}
+    res.json({ historyPoints });
+});
 
 // Add a new function to calculate total points and determine risk category
 app.post('/calculateTotalPoints', (req, res) => {
