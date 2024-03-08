@@ -195,55 +195,42 @@ app.post('/calculateBMI', (req, res) => {
     res.json({ bmiPoints, bmi });
 });
 
-app.post('/calculatePoints', async (req, res) => {
-    const age = parseInt(req.body.age);
-    const height = parseInt(req.body.height);
-    const weight = parseInt(req.body.weight);
-    const systolic = parseInt(req.body.systolic);
-    const diastolic = parseInt(req.body.diastolic);
-    const history = req.body.history;
-
-    const agePoints = calculateAgePoints(age);
-    const bmiPoints = calculateBMIPoints(weight, height);
-    const bloodPressurePoints = calculateBloodPressurePoints(systolic, diastolic);
-    const historyPoints = calculateHistoryPoints(history);
-
-    const totalScore = agePoints + bmiPoints + bloodPressurePoints + historyPoints;
-    const riskCategory = determineRiskCategory(totalScore);
-
-    res.json({
-        agePoints,
-        bmiPoints,
-        bloodPressurePoints,
-        historyPoints,
-        totalScore,
-        riskCategory
-    });
-});
-
 function calculateHistoryPoints(history) {
     let historyPoints = 0;
-    history.forEach(disease => {
-        if (disease === 'diabetes' || disease === 'cancer' || disease === 'alzheimers') {
-            historyPoints += 10;
-        }
-    });
+    if (history.includes("diabetes")) {
+        historyPoints += 10;
+    }
+    if (history.includes("cancer")) {
+        historyPoints += 10;
+    }
+    if (history.includes("alzheimers")) {
+        historyPoints += 10;
+    }
     return historyPoints;
 }
 
-// Other existing functions...
+// Add a new function to calculate total points and determine risk category
+app.post('/calculateTotalPoints', (req, res) => {
+    const agePoints = parseInt(req.body.agePoints);
+    const historyPoints = calculateHistoryPoints(req.body.history);
+    const bmiPoints = parseInt(req.body.bmiPoints);
+    const bloodPressurePoints = parseInt(req.body.bloodPressurePoints);
 
-function determineRiskCategory(totalScore) {
-    if (totalScore <= 20) {
-        return 'Low risk';
-    } else if (totalScore <= 50) {
-        return 'Moderate risk';
-    } else if (totalScore <= 75) {
-        return 'High risk';
+    const totalPoints = agePoints + historyPoints + bmiPoints + bloodPressurePoints;
+
+    let riskCategory;
+    if (totalPoints <= 20) {
+        riskCategory = 'low risk';
+    } else if (totalPoints <= 50) {
+        riskCategory = 'moderate risk';
+    } else if (totalPoints <= 75) {
+        riskCategory = 'high risk';
     } else {
-        return 'Uninsurable';
+        riskCategory = 'uninsurable';
     }
-}
+
+    res.json({ totalPoints, riskCategory });
+});
 
 
 // Custom 404 page.
