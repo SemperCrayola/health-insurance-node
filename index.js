@@ -195,14 +195,19 @@ app.post('/calculateBMI', (req, res) => {
     res.json({ bmiPoints, bmi });
 });
 
-/*app.post('/calculateHistoryPoints', (req, res) => {
-	let historyPoints = 0;
-    	history.forEach(disease => {
-        	if (disease === 'diabetes' || disease === 'cancer' || disease === 'alzheimers') {
-           		historyPoints += 10;
-        	}
-    	res.json({ historyPoints });
-});*/
+function calculateHistoryPoints(history) {
+    let historyPoints = 0;
+    if (history.includes("diabetes")) {
+        historyPoints += 10;
+    }
+    if (history.includes("cancer")) {
+        historyPoints += 10;
+    }
+    if (history.includes("alzheimers")) {
+        historyPoints += 10;
+    }
+    return historyPoints;
+}
 
 // Add a new function to calculate total points and determine risk category
 app.post('/calculateTotalPoints', (req, res) => {
