@@ -197,15 +197,15 @@ app.post('/calculateBMI', (req, res) => {
 
 function calculateHistoryPoints(history) {
     let historyPoints = 0;
-    if (history.includes("diabetes")) {
+    if (history.includes("diabetes") || history.includes("cancer") || history.includes("alzheimers")) {
         historyPoints += 10;
     }
-    if (history.includes("cancer")) {
+    /*if (history.includes("cancer")) {
         historyPoints += 10;
     }
     if (history.includes("alzheimers")) {
         historyPoints += 10;
-    }
+    }*/
     return historyPoints;
 }
 
