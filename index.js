@@ -196,13 +196,12 @@ app.post('/calculateBMI', (req, res) => {
 });
 
 app.post('/calculateHistoryPoints', (req, res) => {
-	const historyPoints = calculateHistoryPoints(req.body.history);
-    let historyPoints = 0;
-    history.forEach(disease => {
-        if (disease === 'diabetes' || disease === 'cancer' || disease === 'alzheimers') {
-            historyPoints += 10;
-        }
-    res.json({ historyPoints });
+	let historyPoints = 0;
+    	history.forEach(disease => {
+        	if (disease === 'diabetes' || disease === 'cancer' || disease === 'alzheimers') {
+           		historyPoints += 10;
+        	}
+    	res.json({ historyPoints });
 });
 
 // Add a new function to calculate total points and determine risk category
