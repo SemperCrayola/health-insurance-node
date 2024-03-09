@@ -196,16 +196,12 @@ app.post('/calculateBMI', (req, res) => {
 });
 
 app.post('/calculateHistoryPoints', (req, res) => {
+	const historyPoints = calculateHistoryPoints(req.body.history);
     let historyPoints = 0;
-    if (history.includes("diabetes")) {
-        historyPoints += 10;
-    }
-    if (history.includes("cancer")) {
-        historyPoints += 10;
-    }
-    if (history.includes("alzheimers")) {
-        historyPoints += 10;
-    }
+    history.forEach(disease => {
+        if (disease === 'diabetes' || disease === 'cancer' || disease === 'alzheimers') {
+            historyPoints += 10;
+        }
     res.json({ historyPoints });
 });
 
