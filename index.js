@@ -197,26 +197,21 @@ app.post('/calculateBMI', (req, res) => {
 
 app.post('/calculatePoints', (req, res) => {
 	const history = req.body.history;
-    let historyPoints = 0;
-    if (history.includes("diabetes") || history.includes("cancer") || history.includes("alzheimers")) {
-        historyPoints += 10;
-    }
-    /*if (history.includes("cancer")) {
-        historyPoints += 10;
-    }
-    if (history.includes("alzheimers")) {
-        historyPoints += 10;
-    }*/
-    res.json({  historyPoints });
+    	let historyPoints = 0;
+    	if (history.includes("diabetes")) {
+        	historyPoints += 10;
+    	}
+    	if (history.includes("cancer")) {
+        	historyPoints += 10;
+    	}
+    	if (history.includes("alzheimers")) {
+        	historyPoints += 10;
+    	}
+    	res.json({ historyPoints });
 });
 
 // Add a new function to calculate total points and determine risk category
-/*app.post('/calculatePoints', (req, res) => {
-    const history = req.body.history;
-    const historyPoints = calculateHistoryPoints(history);
 
-    res.json({  historyPoints });
-});*/
 
 
 // Custom 404 page.
