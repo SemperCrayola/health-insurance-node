@@ -210,26 +210,11 @@ function calculateHistoryPoints(history) {
 }
 
 // Add a new function to calculate total points and determine risk category
-app.post('/calculateTotalPoints', (req, res) => {
-    const agePoints = parseInt(req.body.agePoints);
-    const historyPoints = calculateHistoryPoints(req.body.history);
-    const bmiPoints = parseInt(req.body.bmiPoints);
-    const bloodPressurePoints = parseInt(req.body.bloodPressurePoints);
+app.post('/calculatePoints', (req, res) => {
+    const history = req.body.history;
+    const historyPoints = calculateHistoryPoints(history);
 
-    const totalPoints = agePoints + historyPoints + bmiPoints + bloodPressurePoints;
-
-    let riskCategory;
-    if (totalPoints <= 20) {
-        riskCategory = 'low risk';
-    } else if (totalPoints <= 50) {
-        riskCategory = 'moderate risk';
-    } else if (totalPoints <= 75) {
-        riskCategory = 'high risk';
-    } else {
-        riskCategory = 'uninsurable';
-    }
-
-    res.json({ totalPoints, riskCategory });
+    res.json({  historyPoints });
 });
 
 
