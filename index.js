@@ -210,8 +210,6 @@ app.post('/calculatePoints', (req, res) => {
     	res.json({ historyPoints });
 });
 
-// Add a new function to calculate total points and determine risk category
-
 app.post('/calculateTotalPoints', (req, res) => {
     const { age, systolic, diastolic, weight, height, history } = req.body;
 
