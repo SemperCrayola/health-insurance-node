@@ -212,7 +212,70 @@ app.post('/calculatePoints', (req, res) => {
 
 // Add a new function to calculate total points and determine risk category
 
+app.post('/calculateTotalPoints', (req, res) => {
+    const { age, systolic, diastolic, weight, height, history } = req.body;
 
+    let totalPoints = 0;
+
+    if (age < 30) {
+        totalPoints += 0;
+    } else if (age < 45) {
+        totalPoints += 10;
+    } else if (age < 60) {
+        totalPoints += 20;
+    } else {
+        totalPoints += 30;
+    }
+
+    if (systolic < 120 && diastolic < 80) {
+        totalPoints += 0;
+    } else if (systolic >= 120 && systolic <= 129 && diastolic < 80) {
+        totalPoints += 15;
+    } else if ((systolic >= 130 && systolic <= 139) || (diastolic >= 80 && diastolic <= 89)) {
+        totalPoints += 30;
+    } else if (systolic >= 140 || diastolic >= 90) {
+        totalPoints += 75;
+    } else if ((systolic > 180 && diastolic > 120) || (systolic > 180 || diastolic > 120)) {
+        totalPoints += 100;
+    }
+
+    const weightKg = weight * 0.453592;
+    const heightM = height * 0.0254;
+    const bmi = weightKg / (heightM * heightM);
+
+    if (bmi >= 18.5 && bmi <= 24.9) {
+        totalPoints += 0;
+    } else if (bmi >= 25.0 && bmi <= 29.9) {
+        totalPoints += 30;
+    } else {
+        totalPoints += 75;
+    }
+
+    if (history.includes("diabetes")) {
+        totalPoints += 10;
+    }
+    if (history.includes("cancer")) {
+        totalPoints += 10;
+    }
+    if (history.includes("alzheimers")) {
+        totalPoints += 10;
+    }
+
+    let riskCategory;
+
+    if (totalPoints <= 20) {
+        riskCategory = "Low Risk";
+    } else if (totalPoints <= 50) {
+        riskCategory = "Moderate Risk";
+    } else if (totalPoints <= 75) {
+        riskCategory = "High Risk"; 
+    } else {
+        riskCategory = "Uninsurable";
+    }
+    
+
+    res.json({totalPoints, riskCategory});
+});
 
 // Custom 404 page.
 app.use((request, response) => {
