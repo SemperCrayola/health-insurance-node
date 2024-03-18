@@ -142,6 +142,22 @@ app.post('/addAge', (req, res) => {
     }
     res.json({ agePoints });
 });
+
+app.post('/calculateHistoryPoints', (req, res) => {
+	const history = req.body.history;
+    	let historyPoints = 0;
+    	if (history.includes("diabetes")) {
+        	historyPoints += 10;
+    	}
+    	if (history.includes("cancer")) {
+        	historyPoints += 10;
+    	}
+    	if (history.includes("alzheimers")) {
+        	historyPoints += 10;
+    	}
+    	res.json({ historyPoints });
+});
+
 app.post('/addBloodPressure', (req, res) => {
 
     const systolic = parseInt(req.body.systolic);
@@ -193,21 +209,6 @@ app.post('/calculateBMI', (req, res) => {
     }
 
     res.json({ bmiPoints, bmi });
-});
-
-app.post('/calculatePoints', (req, res) => {
-	const history = req.body.history;
-    	let historyPoints = 0;
-    	if (history.includes("diabetes")) {
-        	historyPoints += 10;
-    	}
-    	if (history.includes("cancer")) {
-        	historyPoints += 10;
-    	}
-    	if (history.includes("alzheimers")) {
-        	historyPoints += 10;
-    	}
-    	res.json({ historyPoints });
 });
 
 app.post('/calculateTotalPoints', (req, res) => {
